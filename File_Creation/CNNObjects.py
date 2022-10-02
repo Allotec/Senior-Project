@@ -1,4 +1,8 @@
 #Returns the correct layer type depending on the name
+#The second parameter is a dictionary containting the layer parameters
+#The dictionary is passed down to the other classes where they get the parameters they need
+#The .get function is used so the program doesn't crash if the parameter is not present
+#The second parameter is the default value if the parameter is not present
 class Layer:
     def __init__(self, layerDict):
         self.name = layerDict['class_name']

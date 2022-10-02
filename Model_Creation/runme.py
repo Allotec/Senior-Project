@@ -21,8 +21,9 @@ def data_visualisation(data):
     plt.imshow(data, cmap=plt.cm.binary)
     plt.show()
 
-
+# Function to build the model architecture, train/evaluate the model, and save the model.
 def modeling(train_images, train_labels, test_images, test_labels):
+    #Architecture of the model
     model = models.Sequential()
     model.add(layers.Conv2D(32, (5, 5), activation='relu', input_shape=(28, 28, 1)))
     model.add(layers.MaxPooling2D((2, 2)))
@@ -30,7 +31,11 @@ def modeling(train_images, train_labels, test_images, test_labels):
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Flatten())
     model.add(layers.Dense(10, activation='softmax'))
+
+    #Prints the summary of the model
     model.summary()
+
+    #Compiles and train
     model.compile(loss='categorical_crossentropy',
                   optimizer='sgd',
                   metrics=['accuracy'])
@@ -41,46 +46,48 @@ def modeling(train_images, train_labels, test_images, test_labels):
     test_loss, test_acc = model.evaluate(test_images, test_labels)
     
     # serialize weights to HDF5
-    model.save("model.h5")
+    model.save("Model_Files/model.h5")
     
     return test_acc, test_loss
 
 
+#Loads in the data set
 def data_set():
     (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
     return train_images, train_labels, test_images, test_labels
 
-
+#Converts the data set into a format that can be used by the model
+#The data comes in as (BatchSize, Height, Width) and needs to be converted to (BatchSize, Height, Width, Channels)
 def data_preproc(train_images, train_labels, test_images, test_labels):
-    train_images = train_images.reshape(
-        (60000, 28, 28, 1))  # Converting every image to 1d; train_images has a shape of 60000x28x28
+    #Reshape and scale to 0-1
+    train_images = train_images.reshape((train_images.shape[0], 28, 28, 1))  # Converting every image to 1d; train_images has a shape of 60000x28x28
     train_images = train_images.astype('float32') / 255  # scaling between 0,1
-    test_images = test_images.reshape((10000, 28, 28, 1))
+    
+    #Reshape and scale to 0-1
+    test_images = test_images.reshape((test_images.shape[0], 28, 28, 1))
     test_images = test_images.astype('float32') / 255
+    
+    #Converts the labels from integers to one hot vectors
+    #This is done because the model has multiple outputs and you take the argmax of the output to get the predicted label
     train_labels = to_categorical(train_labels)  # Converts list labels to numpy array (one-hot encoding)
     test_labels = to_categorical(test_labels)
     return train_images, train_labels, test_images, test_labels
 
 
 if __name__ == '__main__':
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-    # train_images, train_labels, test_images, test_labels = data_set()
-    # train_images, train_labels, test_images, test_labels = data_preproc(train_images, train_labels, test_images, test_labels)
-    #test_acc, test_loss = modeling(train_images, train_labels, test_images, test_labels)
-    #print('Test Accuracy- ', test_acc)
-    #print('Test Loss= ', test_loss)
+    #Trains the model, evaluates its performance and saves the model to Model_Files folder
+    train_images, train_labels, test_images, test_labels = data_set()
+    train_images, train_labels, test_images, test_labels = data_preproc(train_images, train_labels, test_images, test_labels)
+    test_acc, test_loss = modeling(train_images, train_labels, test_images, test_labels)
+    print('Test Accuracy- ', test_acc)
+    print('Test Loss= ', test_loss)
 
-    X_test, y_test = convert_from_file('samples/t10k-images.idx3-ubyte'), convert_from_file('samples/t10k-labels.idx1-ubyte')
+    #Loads the model and saves helpful images to the Model_Image folder
+    model = tf.keras.models.load_model('Model_Files/model.h5')
 
-    X_test = X_test.reshape((10000, 28, 28, 1))
-    X_test = X_test.astype('float32') / 255
-    y_test = to_categorical(y_test)
+    model_json = model.to_json()
+    with open("Model_Files/model.json", "w") as json_file:
+        json_file.write(model_json)
 
-    model = tf.keras.models.load_model('model.h5')
-    score = model.evaluate(X_test, y_test)
-
-    # model_json = model.to_json()
-    # with open("model.json", "w") as json_file:
-    #     json_file.write(model_json)
-
-    #layered_view(model, to_file='layerView.png', legend=True, scale_xy=15, scale_z=10, max_z=100)
+    layered_view(model, to_file='Model_Images/layerView.png', legend=True, scale_xy=15, scale_z=10, max_z=100)
+    plot_model(model, to_file='Model_Images/ModelSummary.png', show_shapes=True, show_layer_names=True)

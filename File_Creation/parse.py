@@ -1,4 +1,3 @@
-from email.mime import base
 import h5py
 import numpy as np
 import json
@@ -58,19 +57,20 @@ def get_value_from_key(string, dictionary):
 #python main function
 if __name__ == '__main__':
     #load the .h5 file
-    h5_file = h5py.File('model.h5', 'r')
+    h5_file = h5py.File('../Model_Creation/Model_Files/model.h5', 'r')
 
+    #obtain the model structure as a dictionary from the json
     h5_structure = get_model_structure(h5_file)
+    model_structure = json.loads(h5_structure)
 
+    #obtain all the datasets from the .h5 file as a dictionary
+    datasets = get_datasets(h5_file)
+    
     #Save the model structure to a .json file
     # with open('model_structure.json', 'w') as f:
     #     f.write(h5_structure)
 
-    datasets = get_datasets(h5_file)
-    #parsing a json file to a python dictionary
-    model_structure = json.loads(h5_structure)
-
-    #Get the layers from the model
+    #Get the layers from the model and store in a list as Layer objects
     layers = model_structure['config']['layers']
 
     layersStruct = []
@@ -79,7 +79,7 @@ if __name__ == '__main__':
         #Returns the layer type
         layersStruct.append(Layer(layer))
 
-    #Remove None from the input layer
+    #Remove None from the input/ouput layer which specifies a variable batch size
     if None in layersStruct[0].layer.input_shape:
         layersStruct[0].layer.input_shape.remove(None)
 

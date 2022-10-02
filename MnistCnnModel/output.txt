@@ -1,3 +1,0 @@
-DelimeterStartingLayer LayerType Layername(null terminated string)  DelimeterStartingLayer
-
-data5340x98590803495890458
