@@ -64,13 +64,13 @@ def data_preproc(train_images, train_labels, test_images, test_labels):
 
 if __name__ == '__main__':
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-    train_images, train_labels, test_images, test_labels = data_set()
-    train_images, train_labels, test_images, test_labels = data_preproc(train_images, train_labels, test_images, test_labels)
+    # train_images, train_labels, test_images, test_labels = data_set()
+    # train_images, train_labels, test_images, test_labels = data_preproc(train_images, train_labels, test_images, test_labels)
     #test_acc, test_loss = modeling(train_images, train_labels, test_images, test_labels)
     #print('Test Accuracy- ', test_acc)
     #print('Test Loss= ', test_loss)
 
-    X_test, y_test = convert_from_file('./samples/t10k-images.idx3-ubyte'), convert_from_file('./samples/t10k-labels.idx1-ubyte')
+    X_test, y_test = convert_from_file('samples/t10k-images.idx3-ubyte'), convert_from_file('samples/t10k-labels.idx1-ubyte')
 
     X_test = X_test.reshape((10000, 28, 28, 1))
     X_test = X_test.astype('float32') / 255
