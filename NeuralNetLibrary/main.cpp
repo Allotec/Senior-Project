@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <Eigen/Dense>
-#include "networksOps.hpp"
+#include "networkOps.hpp"
 
 int main(){
     Eigen::MatrixXf m(2, 2);

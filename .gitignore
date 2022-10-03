@@ -2,3 +2,4 @@ NeuralNetLibrary/CMakeLists.txt
 NeuralNetLibrary/.vscode
 NeuralNetLibrary/build
 
+File_Creation/__pycache__/CNNObjects.cpython-39.pyc
