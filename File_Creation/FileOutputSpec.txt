@@ -52,7 +52,8 @@ Convolution Layer-
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
-    Kernel size for each dimension assumes equal size in every dimension (1 byte)
+    Kernel shape number of dimensions (1 byte)
+    Kernel dimension size (2 bytes) variable amount according to the dimensions 
     Number of filters (1 bytes)
     Input stride number of dimensions (1 byte)
     Input stride size (1 bytes) variable amount according to the dimensions
@@ -76,8 +77,8 @@ Pooling Layer-
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
-    Pool number of dimensions (1 byte)
-    Pool size for each dimension assumes equal size in every dimension (1 byte)
+    Pool shape number of dimensions (1 byte)
+    Pool dimension size (2 bytes) variable amount according to the dimensions 
     Input stride number of dimensions (1 byte)
     Input stride size (1 bytes) variable amount according to the dimensions
     Padding (1 byte)
@@ -97,7 +98,7 @@ Dense Layer-
     Output shape number of dimensions (1 byte)
     Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
     End Structure (1 byte)
-    
+
     Start Data (1 byte) *Bias Start
     Bias data (Size based on type)
     End data (1 byte) *Bias End

@@ -144,7 +144,8 @@ class ConvLayer:
         
         #Kernel size dimension number and dimension values
         layerEncoding.append(len(self.kernel_size)) #Kernel 
-        layerEncoding.append(self.kernel_size[0]) #Kernel size assumes square/cube/... 
+        for i in self.kernel_size:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big')) 
 
         layerEncoding.append(self.filters)
 
@@ -215,7 +216,8 @@ class PoolingLayer:
         
         #Pool size dimension number and dimension values
         layerEncoding.append(len(self.pool_size)) #Kernel 
-        layerEncoding.append(self.pool_size[0]) #Kernel size assumes square/cube/... 
+        for i in self.pool_size:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big')) 
 
         #Strides dimension number and dimension values
         layerEncoding.append(len(self.strides)) #Strides
