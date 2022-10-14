@@ -52,6 +52,8 @@ Convolution Layer-
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
+    Output shape number of dimensions (1 byte)
+    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
     Kernel shape number of dimensions (1 byte)
     Kernel dimension size (2 bytes) variable amount according to the dimensions 
     Number of filters (1 bytes)
@@ -59,8 +61,6 @@ Convolution Layer-
     Input stride size (1 bytes) variable amount according to the dimensions
     Padding (1 byte)
     Activation function (1 byte)
-    Output shape number of dimensions (1 byte)
-    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
     Groups (1 byte)
     End Structure (1 byte)
     Start Data (1 byte) *Bias Start
@@ -77,13 +77,13 @@ Pooling Layer-
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
+    Output shape number of dimensions (1 byte)
+    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
     Pool shape number of dimensions (1 byte)
     Pool dimension size (2 bytes) variable amount according to the dimensions 
     Input stride number of dimensions (1 byte)
     Input stride size (1 bytes) variable amount according to the dimensions
     Padding (1 byte)
-    Output shape number of dimensions (1 byte)
-    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
     End Structure (1 byte)
     *Doesn't have any associated data
 
@@ -94,9 +94,9 @@ Dense Layer-
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
-    Activation function (1 byte)
     Output shape number of dimensions (1 byte)
     Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
+    Activation function (1 byte)
     End Structure (1 byte)
 
     Start Data (1 byte) *Bias Start

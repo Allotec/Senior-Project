@@ -144,6 +144,11 @@ class ConvLayer:
             #(height, width, channels)
             layerEncoding.extend(i.to_bytes(2, byteorder='big')) #Dimension value (2 bytes each)
         
+        #Output shape dimension number and dimension values
+        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
+        for i in self.output_shape:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
+        
         #Kernel size dimension number and dimension values
         layerEncoding.append(len(self.kernel_size)) #Kernel 
         for i in self.kernel_size:
@@ -169,10 +174,6 @@ class ConvLayer:
         elif self.activation == 'softmax':
             layerEncoding.append(SOFTMAX)
 
-        #Output shape dimension number and dimension values
-        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
-        for i in self.output_shape:
-            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
         
         #Number of groups
         layerEncoding.append(self.groups)
@@ -216,6 +217,11 @@ class PoolingLayer:
             #(height, width, channels)
             layerEncoding.extend(i.to_bytes(2, byteorder='big')) #Dimension value (2 bytes each)
         
+        #Output shape dimension number and dimension values
+        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
+        for i in self.output_shape:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
+        
         #Pool size dimension number and dimension values
         layerEncoding.append(len(self.pool_size)) #Kernel 
         for i in self.pool_size:
@@ -229,10 +235,6 @@ class PoolingLayer:
         #Padding
         layerEncoding.append(VALID if self.padding == 'valid' else SAME) #Padding
 
-        #Output shape dimension number and dimension values
-        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
-        for i in self.output_shape:
-            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
 
         layerEncoding.append(END_STRUCTURE) #End structure
 
@@ -278,6 +280,11 @@ class DenseLayer:
             #(height, width, channels)
             layerEncoding.extend(i.to_bytes(2, byteorder='big')) #Dimension value (2 bytes each)
 
+        #Output shape dimension number and dimension values
+        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
+        for i in self.output_shape:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
+        
         #Activation function
         if self.activation == 'relu':
             layerEncoding.append(RELU)
@@ -287,11 +294,6 @@ class DenseLayer:
             layerEncoding.append(TANH)
         elif self.activation == 'softmax':
             layerEncoding.append(SOFTMAX)
-
-        #Output shape dimension number and dimension values
-        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
-        for i in self.output_shape:
-            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
 
         layerEncoding.append(END_STRUCTURE) #End structure
 
