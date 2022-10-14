@@ -33,8 +33,8 @@ Layer activation 1 byte-
 
 InputLayer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions
@@ -47,8 +47,8 @@ InputLayer-
 
 Convolution Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
@@ -72,8 +72,8 @@ Convolution Layer-
 
 Pooling Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
@@ -89,8 +89,8 @@ Pooling Layer-
 
 Dense Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
@@ -108,8 +108,8 @@ Dense Layer-
 
 Flatten Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
