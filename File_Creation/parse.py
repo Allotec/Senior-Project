@@ -134,5 +134,3 @@ if __name__ == '__main__':
 
     #close the .h5 file
     h5_file.close()
-
-
