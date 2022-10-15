@@ -1,6 +1,6 @@
-#include<Eigen/Dense>
+#include</Library/Developer/CommandLineTools/usr/bin/eigen-3.4.0/Eigen/Dense>
 
-//Convolution operation
+//Convolution operation Raaina
 Eigen::MatrixXf convolution(
     Eigen::MatrixXf input, //Input matrix
     std::string padding, //Padding type (valid or same)
@@ -8,12 +8,13 @@ Eigen::MatrixXf convolution(
     std::vector<int> stride, //Stride vector (x movement, y movement, ...)
     Eigen::MatrixXf bias, //Bias matrix
     std::string activation //Activation function (relu, sigmoid, tanh, softmax, linear, ...)
-    );
+    ); 
 
-//Pooling operation
+//Pooling operation Raaina
 Eigen::MatrixXf pooling(
     Eigen::MatrixXf input, //Input matrix
     std::string padding, //Padding type (valid or same)
+    std::vector<int> kernel, //dimensions of kernel (x, y)
     std::string poolingType, //Pooling type (max, average, min...)
     std::vector<int> stride //Stride vector (x movement, y movement, ...)
     );

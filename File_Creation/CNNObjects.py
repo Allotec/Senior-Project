@@ -58,12 +58,14 @@ class Layer:
 #Create a class for an input layer
 class InputLayer:
     def __init__(self, layerDict):
+        #Common
         self.name = layerDict['config'].get('name', 'None') #The name of the layer
         self.input_shape = layerDict['config'].get('batch_input_shape', 'None') #The input shape of the layer as a list
         self.dtype = layerDict['config'].get('dtype', "float32") #The data type of the layer
+        self.output_shape = layerDict['config'].get('batch_input_shape', 'None') #The output shape of the layer as a list
+        #Unique to input layer
         self.sparse = layerDict['config'].get('sparse', False) #Boolean on whether the layer is sparse or not
         self.ragged = layerDict['config'].get('ragged', False) #Boolean on whether the layer is ragged or not
-        self.output_shape = layerDict['config'].get('batch_input_shape', 'None') #The output shape of the layer as a list
     
     #Converts the layer to a string
     def __str__(self):
@@ -75,8 +77,8 @@ class InputLayer:
         layerEncoding = bytearray()
 
         layerEncoding.append(START_STRUCTURE) #Start structure
-        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         layerEncoding.append(INPUT_LAYER) #Layer type encoding
+        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         
         layerEncoding.append(FLOAT32 if self.dtype == 'float32' else FLOAT64) #Data type of the layer
 
@@ -131,8 +133,8 @@ class ConvLayer:
         layerEncoding = bytearray()
 
         layerEncoding.append(START_STRUCTURE) #Start structure
-        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         layerEncoding.append(CONV_LAYER) #Layer type encoding
+        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         
         layerEncoding.append(FLOAT32 if self.dtype == 'float32' else FLOAT64) #Data type of the layer
 
@@ -142,9 +144,15 @@ class ConvLayer:
             #(height, width, channels)
             layerEncoding.extend(i.to_bytes(2, byteorder='big')) #Dimension value (2 bytes each)
         
+        #Output shape dimension number and dimension values
+        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
+        for i in self.output_shape:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
+        
         #Kernel size dimension number and dimension values
         layerEncoding.append(len(self.kernel_size)) #Kernel 
-        layerEncoding.append(self.kernel_size[0]) #Kernel size assumes square/cube/... 
+        for i in self.kernel_size:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big')) 
 
         layerEncoding.append(self.filters)
 
@@ -166,10 +174,6 @@ class ConvLayer:
         elif self.activation == 'softmax':
             layerEncoding.append(SOFTMAX)
 
-        #Output shape dimension number and dimension values
-        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
-        for i in self.output_shape:
-            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
         
         #Number of groups
         layerEncoding.append(self.groups)
@@ -202,8 +206,8 @@ class PoolingLayer:
         layerEncoding = bytearray()
 
         layerEncoding.append(START_STRUCTURE) #Start structure
-        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         layerEncoding.append(MAXPOOL_LAYER if 'Max' in self.poolType else AVGPOOL_LAYER) #Layer type encoding
+        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         
         layerEncoding.append(FLOAT32 if self.dtype == 'float32' else FLOAT64) #Data type of the layer
 
@@ -213,9 +217,15 @@ class PoolingLayer:
             #(height, width, channels)
             layerEncoding.extend(i.to_bytes(2, byteorder='big')) #Dimension value (2 bytes each)
         
+        #Output shape dimension number and dimension values
+        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
+        for i in self.output_shape:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
+        
         #Pool size dimension number and dimension values
         layerEncoding.append(len(self.pool_size)) #Kernel 
-        layerEncoding.append(self.pool_size[0]) #Kernel size assumes square/cube/... 
+        for i in self.pool_size:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big')) 
 
         #Strides dimension number and dimension values
         layerEncoding.append(len(self.strides)) #Strides
@@ -225,10 +235,6 @@ class PoolingLayer:
         #Padding
         layerEncoding.append(VALID if self.padding == 'valid' else SAME) #Padding
 
-        #Output shape dimension number and dimension values
-        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
-        for i in self.output_shape:
-            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
 
         layerEncoding.append(END_STRUCTURE) #End structure
 
@@ -263,8 +269,8 @@ class DenseLayer:
         layerEncoding = bytearray()
 
         layerEncoding.append(START_STRUCTURE) #Start structure
-        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         layerEncoding.append(DENSE_LAYER) #Layer type encoding
+        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         
         layerEncoding.append(FLOAT32 if self.dtype == 'float32' else FLOAT64) #Data type of the layer
 
@@ -274,6 +280,11 @@ class DenseLayer:
             #(height, width, channels)
             layerEncoding.extend(i.to_bytes(2, byteorder='big')) #Dimension value (2 bytes each)
 
+        #Output shape dimension number and dimension values
+        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
+        for i in self.output_shape:
+            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
+        
         #Activation function
         if self.activation == 'relu':
             layerEncoding.append(RELU)
@@ -283,11 +294,6 @@ class DenseLayer:
             layerEncoding.append(TANH)
         elif self.activation == 'softmax':
             layerEncoding.append(SOFTMAX)
-
-        #Output shape dimension number and dimension values
-        layerEncoding.append(len(self.output_shape)) #Output number of dimensions
-        for i in self.output_shape:
-            layerEncoding.extend(i.to_bytes(2, byteorder='big'))
 
         layerEncoding.append(END_STRUCTURE) #End structure
 
@@ -314,8 +320,8 @@ class FlattenLayer:
         layerEncoding = bytearray()
 
         layerEncoding.append(START_STRUCTURE) #Start structure
-        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         layerEncoding.append(FLATTEN_LAYER) #Layer type encoding
+        layerEncoding.extend((self.name + '\0').encode('utf-8')) #Name of the layer
         layerEncoding.append(FLOAT32 if self.dtype == 'float32' else FLOAT64) #Data type of the layer
 
         #Input shape dimension number and dimension values

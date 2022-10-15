@@ -33,8 +33,8 @@ Layer activation 1 byte-
 
 InputLayer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions
@@ -47,19 +47,20 @@ InputLayer-
 
 Convolution Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
-    Kernel size for each dimension assumes equal size in every dimension (1 byte)
+    Output shape number of dimensions (1 byte)
+    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
+    Kernel shape number of dimensions (1 byte)
+    Kernel dimension size (2 bytes) variable amount according to the dimensions 
     Number of filters (1 bytes)
     Input stride number of dimensions (1 byte)
     Input stride size (1 bytes) variable amount according to the dimensions
     Padding (1 byte)
     Activation function (1 byte)
-    Output shape number of dimensions (1 byte)
-    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
     Groups (1 byte)
     End Structure (1 byte)
     Start Data (1 byte) *Bias Start
@@ -71,33 +72,33 @@ Convolution Layer-
 
 Pooling Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
-    Pool number of dimensions (1 byte)
-    Pool size for each dimension assumes equal size in every dimension (1 byte)
+    Output shape number of dimensions (1 byte)
+    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
+    Pool shape number of dimensions (1 byte)
+    Pool dimension size (2 bytes) variable amount according to the dimensions 
     Input stride number of dimensions (1 byte)
     Input stride size (1 bytes) variable amount according to the dimensions
     Padding (1 byte)
-    Output shape number of dimensions (1 byte)
-    Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
     End Structure (1 byte)
     *Doesn't have any associated data
 
 Dense Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
-    Activation function (1 byte)
     Output shape number of dimensions (1 byte)
     Output dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
+    Activation function (1 byte)
     End Structure (1 byte)
-    
+
     Start Data (1 byte) *Bias Start
     Bias data (Size based on type)
     End data (1 byte) *Bias End
@@ -107,8 +108,8 @@ Dense Layer-
 
 Flatten Layer-
     Start Structure (1 byte)
-    Name (Null terminated string)
     Type (1 byte)
+    Name (Null terminated string)
     Data type (1 byte)
     Input shape number of dimensions (1 byte)
     Input dimension size (2 bytes) variable amount according to the dimensions channels_last (height, width, channels)
