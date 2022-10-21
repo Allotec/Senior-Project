@@ -53,6 +53,8 @@ if __name__ == '__main__':
 
     #obtain all the datasets from the .h5 file as a dictionary
     datasets = get_datasets(h5_file)
+    
+    data = []
 
     #Get the layers from the model and store in a list as Layer objects
     layers = model_structure['config']['layers']
@@ -131,6 +133,12 @@ if __name__ == '__main__':
                 f.write(START_DATA.to_bytes(1, byteorder='big'))
                 f.write(key_to_val(layer.layer.name + '/kernel', datasets).flatten().byteswap().tobytes())
                 f.write(END_DATA.to_bytes(1, byteorder='big'))
+
+    
+    with open('modelHex.txt', 'w') as f:
+        for key, val in datasets.items():
+            f.write(key + str(val.shape) + '\n')
+            f.write(str(val) + '\n')
 
     #close the .h5 file
     h5_file.close()

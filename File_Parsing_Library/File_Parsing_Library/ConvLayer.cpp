@@ -10,7 +10,7 @@ ConvLayer::ConvLayer(int filters, std::vector<int> kernelDimensions, std::vector
 	this->activationFunction = activationFunction;
 	this->groups = groups;
 	this->bias = nullptr;
-	this->kernels = std::vector<Eigen::MatrixXf*>();
+	this->kernels = std::vector<MatrixXfRM*>();
 }
 
 //Default Constructor
@@ -42,11 +42,11 @@ std::vector<int> ConvLayer::getKernelDimensions() {
 	return this->kernelDimensions;
 }
 
-std::vector<Eigen::MatrixXf*> ConvLayer::getKernels() {
+std::vector<MatrixXfRM*> ConvLayer::getKernels() {
 	return this->kernels;
 }
 
-Eigen::MatrixXf* ConvLayer::getBias() {
+MatrixXfRM* ConvLayer::getBias() {
 	return this->bias;
 }
 
@@ -91,11 +91,11 @@ void ConvLayer::setGroups(int groups) {
 	this->groups = groups;
 }
 
-void ConvLayer::addKernel(Eigen::MatrixXf* kernel) {
+void ConvLayer::addKernel(MatrixXfRM* kernel) {
 	this->kernels.push_back(kernel);
 }
 
-void ConvLayer::setBias(Eigen::MatrixXf* bias) {
+void ConvLayer::setBias(MatrixXfRM* bias) {
 	if (this->bias != nullptr) {
 		delete this->bias;
 	}
@@ -104,7 +104,32 @@ void ConvLayer::setBias(Eigen::MatrixXf* bias) {
 
 //Methods
 bool ConvLayer::calculateOutput() {
-	return(false);
+	/*std::cout << "Kernel Dimensions in vector: " << this->kernels.at(0)->rows() << ", " << 
+		this->kernels.at(0)->cols() << ", " << this->kernels.size() << std::endl;*/
+	
+	this->outputMatrix->clear();
+	int index = 0;
+
+	//std::cout << "Kernel 0- " << std::endl << *kernels.at(0) << std::endl;
+	
+	for (int j = 0; j < this->filters; j++) {
+		MatrixXfRM tempInput = Eigen::MatrixXf::Zero(this->outputShape.at(0), this->outputShape.at(1));
+		for (int i = 0; i < this->inputMatrix->size(); i++) {
+			tempInput += 
+				convolution(
+				this->inputMatrix->at(i),
+				this->padding,
+				*kernels.at(index++),
+				this->strides,
+				(*this->bias)(0, j),
+				this->activationFunction
+			);
+		}
+		
+		this->outputMatrix->push_back(tempInput);
+	}
+
+	return(true);
 }
 
 //Print the layer

@@ -4,7 +4,7 @@
 //Dense layer class
 class DenseLayer : public Layer {
 private:
-	Eigen::MatrixXf* weights, *biases; //Weights and biases
+	MatrixXfRM* weights, *biases; //Weights and biases
 	int activationFunction;
 public:
 	//Constructor
@@ -13,13 +13,13 @@ public:
 	~DenseLayer();
 
 	//Getters
-	Eigen::MatrixXf* getWeights();
-	Eigen::MatrixXf* getBiases();
+	MatrixXfRM* getWeights();
+	MatrixXfRM* getBiases();
 	int getActivationFunction();
 
 	//Setters
-	void setWeights(Eigen::MatrixXf* weights);
-	void setBiases(Eigen::MatrixXf* biases);
+	void setWeights(MatrixXfRM* weights);
+	void setBiases(MatrixXfRM* biases);
 	void setActivationFunction(int activationFunction);
 
 	//Methods

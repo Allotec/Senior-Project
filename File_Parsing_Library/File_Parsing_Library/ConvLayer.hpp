@@ -6,8 +6,8 @@ class ConvLayer : public Layer {
 private:
 	int filters;
 	std::vector<int> kernelDimensions;
-	std::vector<Eigen::MatrixXf*> kernels;
-	Eigen::MatrixXf* bias; //Should be a vector 
+	std::vector<MatrixXfRM*> kernels;
+	MatrixXfRM* bias; //Should be a vector 
 	std::vector<int> strides;
 	int padding;
 	int activationFunction;
@@ -22,8 +22,8 @@ public:
 	//Getters
 	int getFilters();
 	std::vector<int> getKernelDimensions();
-	std::vector<Eigen::MatrixXf*> getKernels();
-	Eigen::MatrixXf* getBias();
+	std::vector<MatrixXfRM*> getKernels();
+	MatrixXfRM* getBias();
 	std::vector<int> getStrides();
 	int getPadding();
 	int getActivationFunction();
@@ -36,8 +36,8 @@ public:
 	void setPadding(int padding);
 	void setActivationFunction(int activationFunction);
 	void setGroups(int groups);
-	void addKernel(Eigen::MatrixXf* kernel);
-	void setBias(Eigen::MatrixXf* bias);
+	void addKernel(MatrixXfRM* kernel);
+	void setBias(MatrixXfRM* bias);
 
 	//Methods
 	bool calculateOutput();

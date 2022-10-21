@@ -4,6 +4,7 @@
 #include<Eigen/Dense>
 #include <iostream>
 #include "LayerConstants.hpp"
+#include "networkOps.hpp"
 
 //Parent class of all layers 
 class Layer {
@@ -11,7 +12,7 @@ protected://Always check for proper layertype when assigning it to a child
 	std::string name; //Unique name of the layer
 	uint8_t layerType, dataType; //Type of layer 
 	std::vector<int> inputShape, outputShape; //Matrix shapes
-	std::vector<Eigen::MatrixXf>* inputMatrix, *outputMatrix; //Matrices
+	std::vector<MatrixXfRM>* inputMatrix, *outputMatrix; //Matrices
 	
 public:
 	//Constructor
@@ -25,16 +26,16 @@ public:
 	uint8_t getDataType();
 	std::vector<int> getInputShape();
 	std::vector<int> getOutputShape();
-	std::vector<Eigen::MatrixXf>* getInputMatrix();
-	std::vector<Eigen::MatrixXf>* getOutputMatrix();
+	std::vector<MatrixXfRM>* getInputMatrix();
+	std::vector<MatrixXfRM>* getOutputMatrix();
 
 	//Setters
 	void setName(std::string name);
 	void setDataType(uint8_t dataType);
 	void setInputShape(std::vector<int> inputShape);
 	void setOutputShape(std::vector<int> outputShape);
-	void setInputMatrix(std::vector<Eigen::MatrixXf>* inputMatrix);
-	void setOutputMatrix(std::vector<Eigen::MatrixXf>* outputMatrix);
+	void setInputMatrix(std::vector<MatrixXfRM>* inputMatrix);
+	void setOutputMatrix(std::vector<MatrixXfRM>* outputMatrix);
 
 	//Methods 
 	//Calculates the output and returns true if successful false otherwise

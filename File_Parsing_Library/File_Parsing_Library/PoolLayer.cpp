@@ -56,6 +56,12 @@ void PoolLayer::setPoolType(int poolType) {
 
 //Methods
 bool PoolLayer::calculateOutput() {
+	this->outputMatrix->clear();
+
+	for (int i = 0; i < this->inputMatrix->size(); i++) {
+		this->outputMatrix->push_back(pooling(this->inputMatrix->at(i), this->padding, this->poolDimensions, this->poolType, this->strides));
+	}
+
 	return(true);
 }
 

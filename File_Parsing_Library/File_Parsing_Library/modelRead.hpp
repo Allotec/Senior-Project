@@ -13,7 +13,7 @@ Layer* readFlattenLayer(std::ifstream& file);
 Layer* readDenseLayer(std::ifstream& file);
 
 //Reads in the data and returns a matrix with the size parameters
-Eigen::MatrixXf* readMatrix(std::ifstream& file, std::vector<int> dimensions, int dataType);
+MatrixXfRM* readMatrix(std::ifstream& file, std::vector<int> dimensions, int dataType);
 float readDecimal(std::ifstream& file, int sizeInBytes);
 
 union BytesToFloat {

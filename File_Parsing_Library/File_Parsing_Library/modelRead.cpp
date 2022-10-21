@@ -15,7 +15,11 @@ Model* createModel(std::string path){
 	std::ifstream file("modelHex.lit", std::ios::binary);
 	
 	//If the file couldnt open return nothing
-	if (!file.is_open()) return(nullptr);
+	if (!file.is_open()) {
+		std::cout << "Couldn't open file" << std::endl;
+		delete model;
+		exit(1);
+	}
 
 	char val = 0;
 	
@@ -242,7 +246,7 @@ Layer* readConvLayer(std::ifstream& file) {
 	file.get(c);
 	if ((c & 0xFF) != END_DATA)
 		std::cout << "Error reading Convolution layer kernel end" << std::endl;
-	
+
 	return(tempLayer);
 }
 
@@ -252,6 +256,9 @@ Layer* readPoolLayer(std::ifstream& file, int poolType) {
 
 	//Read the common parameters
 	tempLayer = (PoolLayer*)commonParametersRead(file, tempLayer);
+
+	//Set the pool type
+	tempLayer->setPoolType(poolType);
 
 	//Pool shape number of dimensions(1 byte)
 	file.get(c);
@@ -332,7 +339,6 @@ Layer* readDenseLayer(std::ifstream& file) {
 	if ((c & 0xFF) != END_STRUCTURE)
 		std::cout << "Error reading dense layer structure" << std::endl;
 	
-	
 	//Start Data(1 byte)* Bias Start
 	file.get(c);
 	if ((c & 0xFF) != START_DATA)
@@ -352,8 +358,8 @@ Layer* readDenseLayer(std::ifstream& file) {
 		std::cout << "Error reading dense layer weight data start" << std::endl;
 	
 	//Weights data(Size based on type)
-	tempLayer->setBiases(readMatrix(file, std::vector<int>{tempLayer->getInputShape().at(0), tempLayer->getOutputShape().at(0)}, tempLayer->getDataType()));
-
+	tempLayer->setWeights(readMatrix(file, std::vector<int>{tempLayer->getInputShape().at(0), tempLayer->getOutputShape().at(0)}, tempLayer->getDataType()));
+	
 	//End data(1 byte)* Weights End
 	file.get(c);
 	if ((c & 0xFF) != END_DATA)
@@ -362,8 +368,8 @@ Layer* readDenseLayer(std::ifstream& file) {
 	return(tempLayer);
 }
 
-Eigen::MatrixXf* readMatrix(std::ifstream& file, std::vector<int> dimensions, int dataType) {
-	Eigen::MatrixXf* matrix = new Eigen::MatrixXf();
+MatrixXfRM* readMatrix(std::ifstream& file, std::vector<int> dimensions, int dataType) {
+	MatrixXfRM* matrix = new MatrixXfRM();
 
 	matrix->resize(dimensions[0], dimensions[1]);
 
@@ -387,6 +393,7 @@ float readDecimal(std::ifstream& file, int sizeInBytes) {
 	//Read in bytes
 	for (int i = 0; i < sizeInBytes; i++) {
 		file.get(c);
+		//Read as big endian
 		num.b = (num.b << 8) | (c & 0xFF);
 	}
 	

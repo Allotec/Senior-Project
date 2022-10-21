@@ -41,7 +41,11 @@ void InputLayer::setRagged(bool ragged) {
 //Methods
 //Calculates the output and returns true if successful false otherwise
 bool InputLayer::calculateOutput() {
-	this->outputMatrix = this->inputMatrix;
+	this->outputMatrix->clear();
+	
+	for (auto i : *this->inputMatrix) {
+		this->outputMatrix->push_back(i);
+	}
 	return(this->inputMatrix != nullptr);
 }
 

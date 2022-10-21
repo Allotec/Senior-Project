@@ -8,6 +8,8 @@ Layer::Layer(std::string name, int layerType, int dataType, std::vector<int> inp
 	this->dataType = dataType;
 	this->inputShape = inputShape;
 	this->outputShape = outputShape;
+	this->inputMatrix = nullptr;
+	this->outputMatrix = new std::vector<MatrixXfRM>;
 }
 
 //Default constructor
@@ -17,6 +19,8 @@ Layer::Layer(int layerType) {
 	this->inputShape = std::vector<int>();
 	this->outputShape = std::vector<int>();
 	this->layerType = layerType;
+	this->inputMatrix = nullptr;
+	this->outputMatrix = new std::vector<MatrixXfRM>;
 }
 
 //Destructor 
@@ -50,11 +54,11 @@ std::vector<int> Layer::getOutputShape() {
 	return this->outputShape;
 }
 
-std::vector<Eigen::MatrixXf>* Layer::getInputMatrix() {
+std::vector<MatrixXfRM>* Layer::getInputMatrix() {
 	return this->inputMatrix;
 }
 
-std::vector<Eigen::MatrixXf>* Layer::getOutputMatrix() {
+std::vector<MatrixXfRM>* Layer::getOutputMatrix() {
 	return this->outputMatrix;
 }
 
@@ -76,15 +80,15 @@ void Layer::setOutputShape(std::vector<int> outputShape) {
 }
 
 //Should make sure that the dimensions are correct before assigning
-void Layer::setInputMatrix(std::vector<Eigen::MatrixXf>* inputMatrix) {
-	if (inputMatrix != nullptr) {
+void Layer::setInputMatrix(std::vector<MatrixXfRM>* inputMatrix) {
+	/*if (this->inputMatrix != nullptr) {
 		delete this->inputMatrix;
-	}
+	}*/
 	this->inputMatrix = inputMatrix;
 }
 
 //Should check if the dimensions are correct before assigning
-void Layer::setOutputMatrix(std::vector<Eigen::MatrixXf>* outputMatrix) {
+void Layer::setOutputMatrix(std::vector<MatrixXfRM>* outputMatrix) {
 	if (outputMatrix != nullptr) {
 		delete this->outputMatrix;
 	}

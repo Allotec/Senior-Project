@@ -24,11 +24,11 @@ DenseLayer::~DenseLayer() {
 }
 
 //Getters
-Eigen::MatrixXf* DenseLayer::getWeights() {
+MatrixXfRM* DenseLayer::getWeights() {
 	return this->weights;
 }
 
-Eigen::MatrixXf* DenseLayer::getBiases() {
+MatrixXfRM* DenseLayer::getBiases() {
 	return this->biases;
 }
 
@@ -37,14 +37,14 @@ int DenseLayer::getActivationFunction() {
 }
 
 //Setters
-void DenseLayer::setWeights(Eigen::MatrixXf* weights) {
+void DenseLayer::setWeights(MatrixXfRM* weights) {
 	if (this->weights != nullptr) {
 		delete this->weights;
 	}
 	this->weights = weights;
 }
 
-void DenseLayer::setBiases(Eigen::MatrixXf* biases) {
+void DenseLayer::setBiases(MatrixXfRM* biases) {
 	if (this->biases != nullptr) {
 		delete this->biases;
 	}
@@ -57,6 +57,17 @@ void DenseLayer::setActivationFunction(int activationFunction) {
 
 //Methods
 bool DenseLayer::calculateOutput() {
+	this->outputMatrix->clear();
+	this->outputMatrix->push_back(
+		dense(
+			this->inputMatrix->at(0), 
+			*this->weights, 
+			*this->biases, 
+			this->activationFunction)
+	);
+
+	//Check shapes
+
 	return(true);
 }
 

@@ -8,7 +8,6 @@ import tensorflow as tf
 import numpy as np
 from idx2numpy import convert_from_file
 from visualkeras import layered_view
-import os
 
 ## Overview
 # This code runs a CNN model (deep learning) on MNIST dataset and renders model summary, test accuracy and test loss as output

@@ -42,12 +42,12 @@ std::vector<std::pair<MatrixXfRM, int>>* read_Mnist_Images(std::string images, s
 			for (int k = 0; k < numberOfColumns; k++) {
 				unsigned char temp = 0;
 				imageFile.read((char*)&temp, sizeof(temp));
-				image(j, k) = (float)temp;
+				image(j, k) = (float)temp / 255.0f;
 			}
 		}
 		unsigned char tempLabel = 0;
 		labelFile.read((char*)&tempLabel, sizeof(tempLabel));
-		imageVector->push_back(std::make_pair(image / 255, (int)tempLabel));
+		imageVector->push_back(std::make_pair(image, (int)tempLabel));
 	}
 
 	return imageVector;

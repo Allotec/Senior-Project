@@ -11,6 +11,7 @@ public:
 	
 	//Methods
 	void addLayer(Layer* layer); //Adds to the end
-	void calculateOutput(std::vector<Eigen::MatrixXf*> input);
-	void print();
+	bool calculateOutput(std::vector<MatrixXfRM>* input, int index);
+	void print(); //Prints summary
+	void outputModel(std::string path);//Dumps the output of each layer to a bin file
 };
