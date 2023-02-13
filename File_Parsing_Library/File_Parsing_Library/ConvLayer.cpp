@@ -108,26 +108,38 @@ bool ConvLayer::calculateOutput() {
 		this->kernels.at(0)->cols() << ", " << this->kernels.size() << std::endl;*/
 	
 	this->outputMatrix->clear();
-	int index = 0;
-
-	//std::cout << "Kernel 0- " << std::endl << *kernels.at(0) << std::endl;
+	//int index = 0;
 	
-	for (int j = 0; j < this->filters; j++) {
-		MatrixXfRM tempInput = Eigen::MatrixXf::Zero(this->outputShape.at(0), this->outputShape.at(1));
-		for (int i = 0; i < this->inputMatrix->size(); i++) {
-			tempInput += 
-				convolution(
-				this->inputMatrix->at(i),
-				this->padding,
-				*kernels.at(index++),
-				this->strides,
-				(*this->bias)(0, j),
-				this->activationFunction
-			);
-		}
-		
-		this->outputMatrix->push_back(tempInput);
-	}
+	//Print out kernels
+	/*for (auto i : this->kernels) {
+		std::cout << *i << std::endl;
+	}*/
+
+	//std::cout << "Bias- " << std::endl << *bias << std::endl;
+	
+	//for (int j = 0; j < this->filters; j++) {
+	//	MatrixXfRM tempInput = Eigen::MatrixXf::Constant(this->outputShape.at(0), this->outputShape.at(1), (*this->bias)(0, j));
+	//	
+	//	for (int i = 0; i < this->inputMatrix->size(); i++) {
+	//		tempInput += 
+	//			convolution(
+	//			this->inputMatrix->at(i),
+	//			this->padding,
+	//			*kernels.at(index++),
+	//			this->strides,
+	//			(*this->bias)(0, j),//This doesnt do anything anymore
+	//			this->activationFunction
+	//		);
+	//	}
+	//	
+	//	this->outputMatrix->push_back(Relu(tempInput));
+	//}
+
+	this->outputMatrix = conv2d(*this->inputMatrix, this->kernels, this->strides.at(0), *this->bias, this->inputMatrix->size(), this->filters);
+	
+	/*for (auto i : *outputMatrix) {
+		std::cout << i << std::endl;
+	}*/
 
 	return(true);
 }

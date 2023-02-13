@@ -30,7 +30,9 @@ bool Model::calculateOutput(std::vector<MatrixXfRM>* input, int index) {
 		
 		//Calculate the output
 		this->layers[i]->calculateOutput();
-
+		//std::cout << "Layer- " << i << std::endl;
+		//for(auto i : *this->layers[i]->getOutputMatrix())
+		//	std::cout << i << std::endl;
 		//std::cout << "Layer- " << i << std::endl << this->layers[i]->getOutputMatrix()->at(0) << std::endl;
 
 		/*std::cout << "Output Shape of Layer " << this->layers[i]->getName() << ": " <<

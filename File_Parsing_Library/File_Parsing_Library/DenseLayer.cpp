@@ -58,6 +58,7 @@ void DenseLayer::setActivationFunction(int activationFunction) {
 //Methods
 bool DenseLayer::calculateOutput() {
 	this->outputMatrix->clear();
+	
 	this->outputMatrix->push_back(
 		dense(
 			this->inputMatrix->at(0), 

@@ -12,7 +12,7 @@
 //Returns a model with all the layers
 Model* createModel(std::string path){
 	Model* model = new Model();
-	std::ifstream file("modelHex.lit", std::ios::binary);
+	std::ifstream file(path, std::ios::binary);
 	
 	//If the file couldnt open return nothing
 	if (!file.is_open()) {
@@ -376,7 +376,7 @@ MatrixXfRM* readMatrix(std::ifstream& file, std::vector<int> dimensions, int dat
 	//Read in the matrix
 	for (int i = 0; i < dimensions[0]; i++) {
 		for (int j = 0; j < dimensions[1]; j++) {
-			(*matrix)(i, j) = readDecimal(file, dataType == 0 ? sizeof(float) : sizeof(double));
+			(*matrix)(i, j) = readDecimal(file, dataType == FLOAT32 ? sizeof(float) : sizeof(double));
 		}
 	}
 

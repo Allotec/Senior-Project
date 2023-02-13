@@ -38,3 +38,5 @@ MatrixXfRM Softmax(MatrixXfRM input);
 //Calculates the relu of a matrix
 MatrixXfRM Relu(MatrixXfRM input);
 
+std::vector<MatrixXfRM>* conv2d(std::vector<MatrixXfRM> input, std::vector<MatrixXfRM*> filter, int stride, MatrixXfRM bias, int num_input_channels, int num_output_channels);
+std::vector<MatrixXfRM>* ReluMatrix(std::vector<MatrixXfRM>* input);
