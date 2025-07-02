@@ -3,12 +3,12 @@
 
 class FlattenLayer : public Layer {
 private:
-
 public:
-	FlattenLayer(std::string name, int dataType, std::vector<int> inputShape, std::vector<int> outputShape);
-	FlattenLayer();
-	~FlattenLayer();
+  FlattenLayer(std::string name, int dataType, std::vector<int> inputShape,
+               std::vector<int> outputShape);
+  FlattenLayer();
+  ~FlattenLayer();
 
-	bool calculateOutput();
-	void print();
+  bool calculateOutput();
+  void print();
 };

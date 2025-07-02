@@ -3,11 +3,13 @@
 #include <algorithm>
 #include <cmath>
 #include <float.h>
+#include <fstream>
 #include <iostream>
 #include <math.h>
 #include <vector>
 
 // Convolution operation
+// NOTE: not used, use the conv2d
 MatrixXfRM convolution(MatrixXfRM input, int padding, MatrixXfRM kernel,
                        std::vector<int> stride, float bias, int activation) {
   int output_rows, output_col;
@@ -105,8 +107,6 @@ std::vector<MatrixXfRM> *conv2d(std::vector<MatrixXfRM> input,
 
   return (ReluMatrix(output));
 }
-
-#include <fstream>
 
 // Pooling operation
 MatrixXfRM pooling(MatrixXfRM input, int padding, std::vector<int> kernel,
