@@ -17,5 +17,5 @@ Implemented the forward pass algorithm for a machine learning model.
 
 # Links
 
-- Avenet Minized FPGA Board- https://www.avnet.com/americas/products/avnet-boards/avnet-board-families/minized/
-- Senior Advisor's Publications- https://www.petermilder.com/publications.html
+- [Avenet Minized FPGA Board](https://www.avnet.com/americas/products/avnet-boards/avnet-board-families/minized/)
+- [Senior Advisor's Publications](https://www.petermilder.com/publications.html)
